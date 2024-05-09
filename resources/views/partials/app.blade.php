@@ -20,21 +20,24 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            @if (Auth::user()->role == 'admin')
-                            @else
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('welcome') }}">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('universities.list') }}">Universities</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('universities.rankings') }}">Rankings</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('welcome') }}">About</a>
-                            </li>
-                            @endif
+                        @if (Auth::check() && Auth::user()->role == 'admin')
+                        <!-- Si l'utilisateur est connecté et est un admin -->
+                    @else
+                        <!-- Si l'utilisateur n'est pas connecté ou n'est pas un admin -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('welcome') }}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('universities.list') }}">Universities</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('universities.rankings') }}">Rankings</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('welcome') }}">About</a>
+                        </li>
+                    @endif
+
 
                     </ul>
                     <div class="navbar-nav">

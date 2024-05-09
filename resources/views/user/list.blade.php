@@ -18,7 +18,6 @@
                     </div>
                     <div class="h5 text-center">
                         <strong>{{ Auth::user()->name }}</strong>
-                        <p class="h6 mt-2 text-muted">5 Reviews</p>
                     </div>
                 </div>
             </div>
@@ -40,7 +39,6 @@
                 <div class="card-body pb-0">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <div class="col-6">
-
                                 <form action="" method="get">
                                     <div class="input-group">
                                         <input type="text" class="form-control" value="{{ Request::get('keyword') }}" name="keyword" placeholder="Search..." aria-label="Search" aria-describedby="button-addon2">

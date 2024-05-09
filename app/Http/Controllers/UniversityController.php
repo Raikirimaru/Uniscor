@@ -28,20 +28,28 @@ class UniversityController extends Controller
         return view('universities.list', compact('universities'));
     }
 
+
     public function listUniversities(Request $request)
     {
-        $universities =  University::with(['ratings', 'criteria'])->orderBy('created_at' , 'DESC')->paginate(8);
+        $keyword = $request->input('keyword');
 
-        if (!empty($request->keyword)) {
-            $universities->where('name', 'like', '%'.$request->keyword.'%');
+        $universities = University::with(['ratings', 'criteria'])
+            ->orderBy('created_at', 'DESC');
+
+        if (!empty($keyword)) {
+            $universities->where('name', 'like', '%' . $keyword . '%');
         }
+
+        $universities = $universities->paginate(8);
 
         $universities->each(function ($university) {
             $averageRating = $university->ratings->avg('score');
             $university->averageRating = $averageRating;
         });
+
         return view('universities.index', compact('universities'));
     }
+
 
     public function create()
     {
@@ -180,13 +188,13 @@ class UniversityController extends Controller
         return redirect()->route('universities.index')->with('success', 'University updated successfully');
     }
 
-    public function destroy(Request $request)
+    public function destroy(string $id)
     {
-        $university = University::findOrFail($request->id);
+        $university = University::findOrFail($id);
 
         if ($university->delete() === false) {
             return response(
-                "Couldn't delete the university with id {$request->id}",
+                "Couldn't delete the university with id {$id}",
                 Response::HTTP_BAD_REQUEST
             );
         }
